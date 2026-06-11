@@ -17,6 +17,17 @@ export interface Env {
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    if (!env.WEBDAV_USERNAME || !env.WEBDAV_PASSWORD) {
+      return new Response(
+        "This server is deployed but has no credentials configured yet.\n\n" +
+          "Set them with:\n" +
+          "  npx wrangler secret put WEBDAV_USERNAME\n" +
+          "  npx wrangler secret put WEBDAV_PASSWORD\n\n" +
+          "or under Settings > Variables and Secrets on this Worker in the Cloudflare dashboard.\n",
+        { status: 503, headers: { "Content-Type": "text/plain" } }
+      );
+    }
+
     if (!(await authorized(request, env))) {
       return new Response("Unauthorized", {
         status: 401,
