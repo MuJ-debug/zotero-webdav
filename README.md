@@ -49,6 +49,8 @@ files in My Library using" to **WebDAV**:
 
 Click **Verify Server**.
 
+![Zotero settings screenshot](./zotero-settings.jpg)
+
 ## How it works
 
 Zotero stores each attachment flat under `/zotero/` as `<itemKey>.zip` plus a
