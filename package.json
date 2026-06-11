@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "description": "WebDAV endpoint for Zotero file sync, backed by Cloudflare R2",
+  "license": "MIT",
+  "author": "Andrew Duffy",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
