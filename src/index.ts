@@ -205,16 +205,12 @@ async function handlePut(env: Env, key: string, request: Request): Promise<Respo
 
 async function handleDelete(env: Env, key: string): Promise<Response> {
   if (key === "" || key.endsWith("/")) {
-    // Deleting a collection: remove everything under the prefix.
-    let cursor: string | undefined;
-    do {
-      const page = await env.BUCKET.list({ prefix: key, cursor });
-      if (page.objects.length > 0) {
-        await env.BUCKET.delete(page.objects.map((o) => o.key));
-      }
-      cursor = page.truncated ? page.cursor : undefined;
-    } while (cursor);
-    return new Response(null, { status: 204 });
+    // Zotero only deletes individual .zip/.prop objects. Refuse collection
+    // deletes so a mistaken request cannot remove every object under a prefix.
+    return new Response("Method Not Allowed", {
+      status: 405,
+      headers: { Allow: "OPTIONS, PROPFIND, MKCOL" },
+    });
   }
 
   const existing = await env.BUCKET.head(key);

@@ -58,7 +58,8 @@ small `<itemKey>.prop` metadata file. These map 1:1 to R2 object keys. R2 has
 no real directories, so collections are implicit: `PROPFIND` on any
 trailing-slash path reports an existing collection and `MKCOL` is a no-op
 success. Zotero's "purge orphaned files" works too — Depth-1 `PROPFIND`
-paginates the full bucket listing.
+paginates the full bucket listing. Collection-level `DELETE` is rejected
+with 405; only individual objects can be deleted.
 
 ## Local development
 
